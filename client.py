@@ -38,9 +38,14 @@ MODELS = {
     # Cheap, fast open-weight model: decomposes the question into a plan.
     "planner": os.environ.get("OTARI_MODEL_PLANNER", "openai/gpt-oss-20b"),
     # Main reasoner: runs the gateway tools and drafts the answer.
-    "researcher": os.environ.get("OTARI_MODEL_RESEARCHER", "deepseek/deepseek-v4-flash"),
+    # (deepseek-v4.1-flash-1017 verified live in GET /api/v1/models, 2026-11-11.)
+    "researcher": os.environ.get(
+        "OTARI_MODEL_RESEARCHER", "deepseek/deepseek-v4.1-flash-1017"
+    ),
     # Third model, different family: critiques the draft before it ships.
-    "critic": os.environ.get("OTARI_MODEL_CRITIC", "z-ai/glm-flash"),
+    # (glm-5.3-flash verified live in GET /api/v1/models, 2026-11-11; the old
+    # "z-ai/glm-flash" default does not exist in the hosted catalog.)
+    "critic": os.environ.get("OTARI_MODEL_CRITIC", "z-ai/glm-5.3-flash"),
 }
 
 # Gateway-run tools (docs/tools.md). They are declared in-request and executed
