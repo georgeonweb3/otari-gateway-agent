@@ -1,0 +1,24 @@
+# DoraHacks submission — Mozilla Otari Hackathon (Devs Wilding Online)
+
+Pre-filled fields for the submission form. Copy each into the matching field.
+
+- **Project name:** SpendGuard CLI (otari-gateway-agent)
+- **Contact email (the one used to sign up to Otari.ai):** georgeterlumun3@gmail.com
+- **One line on what the project does:** A research agent whose guardrail is the gateway itself: every model call routed through Otari, split across three open-weight models in distinct roles, hard-capped by a per-key budget Otari enforces before dispatch — proven live when a $0.001-capped key was refused on call 1 with `{"detail":"API key has exceeded budget limit","code":"budget_exceeded"}`.
+- **Public GitHub repository:** https://github.com/georgeonweb3/otari-gateway-agent
+- **Hackathon branch name:** devs-wilding
+- **First commit on that branch where Otari came in:** https://github.com/georgeonweb3/otari-gateway-agent/commit/38db554192c242e87fcd630612fd75c8d9d154e7
+- **Otari features used:**
+  - OpenAI-compatible gateway — one workspace API key in front of a 174-model catalog; only the `base_url` changes (`https://api.otari.ai/api/v1`).
+  - Three open-weight models in distinct roles through that one key: planner `openai/gpt-oss-20b`, researcher `deepseek/deepseek-v4.1-flash-1017`, critic `z-ai/glm-5.3-flash`. Main pipeline: 3 calls, 2,413 tokens, ≈ $0.0005, VERDICT: PASS.
+  - Per-API-key budgets enforced before dispatch: main key capped at $0.50 ($0.02 spent per the dashboard); a second key capped at $0.001, already ≈ $0.0043 spent, was refused on call 1 (HTTP 403, `budget_exceeded`, 0 successful calls).
+  - `otari_code_execution` — fired server-side; computed a monthly spend of exactly $3.00 and a $2 cap binding at 333 calls/day (VERDICT: PASS). The API returns no `tool_calls` array, so the evidence is content-level.
+  - `otari_web_search` — executed in standalone isolated calls (5 sources returned, $0.010383, completion id `chatcmpl-RQxeMe4VSOFWljhEjjPOZKOc`); inside the multi-call agent sequence its executions were refused with `budget_exceeded` tool errors — stated honestly, and filed as an issue.
+  - Workspace "Allow web access" toggle — enabling it flipped all three gateway tools to available in `GET /api/v1/tools`. Tools run totals: 4 calls, 14,384 tokens, ≈ $0.002 of model calls.
+  - Not used: guardrail profiles and routing policies (they exist in Otari; they were not configured for this entry).
+- **PRs or issues opened on the Otari repo:**
+  - Issue: https://github.com/mozilla-ai/otari/issues/3184 — Hosted gateway: `GET /api/v1/key` returns 404 (documented key self-read); `/usage` is master-key-only, completion ids don't resolve in `/usage/requests`.
+  - Issue: https://github.com/mozilla-ai/otari/issues/3185 — Tool executions refused with `budget_exceeded` inside multi-call agent sequences while identical standalone calls succeed; fetch declaration can 422 the whole request.
+  - PRs: none.
+- **Demo video (3–5 min):** PENDING — link to be added when the video is published.
+- **Feedback:** Full written feedback is in FEEDBACK.md (kept alongside this file and copied into the repo). Summary: what worked is the core promise — OpenAI-compatible access to 174 models behind one key, and per-key budgets enforced before dispatch (a $0.001-capped key refused on call 1). What didn't work is observability: `GET /api/v1/key` 404s though documented, `/usage` is master-key-only, completion ids don't resolve in `/usage/requests/{id}`, and tool executions inside an agent sequence hit an undocumented `budget_exceeded` while standalone calls succeed (declaring `otari_web_fetch` in the sequence also 422'd the whole request). Most-tempted-to-skip moment: debugging blind on spend readback and tool refusals. Would I keep using Otari without the rules? Yes — for the budgets and the one-key multi-model routing. The enforcement is ahead of the observability.
