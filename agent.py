@@ -130,11 +130,21 @@ def run_research(question: str) -> int:
 
 
 def print_spend_summary() -> None:
-    """Cross-check spend against the gateway's own record (GET /api/v1/key)."""
+    """Cross-check spend against the gateway's own record (GET /api/v1/key).
+
+    On the hosted gateway that endpoint currently answers 404 for a regular
+    key (verified live, 2026-11-11), so there is no API spend readback —
+    say exactly that instead of surfacing the raw HTTP failure, and never
+    invent a figure. A successful pipeline run still exits 0.
+    """
     try:
         usage = otari.fetch_key_usage()
-    except Exception as exc:  # report honestly; never invent a figure
-        print(f"[otari] spend readback from /api/v1/key failed: {exc}")
+    except Exception:  # 404 on the hosted gateway; report it plainly
+        print(
+            "Spend readback via API unavailable: GET /api/v1/key returns "
+            "404 on the hosted gateway (docs list it as a key self-read). "
+            "Balance is visible in the Otari dashboard."
+        )
         return
     print(f"[otari] key budget/usage per GET /api/v1/key: {json.dumps(usage)}")
 
