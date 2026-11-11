@@ -78,9 +78,11 @@ class MissingApiKey(RuntimeError):
 class BudgetRefused(Exception):
     """Otari refused a call before dispatch (budget / spending limit).
 
-    `raw` is the gateway's error string, unedited — in --budget-demo mode it
-    is printed verbatim as the proof that the gateway, not this app, is the
-    spend guard.
+    `raw` is the gateway's response body, verbatim — the JSON detail (e.g.
+    {"detail": "API key has exceeded budget limit", "code":
+    "budget_exceeded"}), not the SDK's one-line summary of it. In
+    --budget-demo mode it is printed as-is: the proof that the gateway, not
+    this app, is the spend guard.
     """
 
     def __init__(self, status_code: int, raw: str):
@@ -147,7 +149,25 @@ def chat(
         resp = client.chat.completions.create(**kwargs)
     except APIStatusError as exc:
         if exc.status_code in BUDGET_STATUS_CODES:
-            raise BudgetRefused(exc.status_code, str(exc)) from exc
+            # Carry the gateway's response body itself (the JSON detail),
+            # not str(exc) — the SDK's summary is just "Error code: 403"
+            # and throws away the only part worth showing.
+            body = ""
+            response = getattr(exc, "response", None)
+            if response is not None:
+                try:
+                    body = response.text or ""
+                except Exception:
+                    body = ""
+            if not body:
+                fallback = getattr(exc, "body", None)
+                if isinstance(fallback, str):
+                    body = fallback
+                elif fallback is not None:
+                    body = json.dumps(fallback)
+                else:
+                    body = str(exc)
+            raise BudgetRefused(exc.status_code, body) from exc
         raise
     latency = time.monotonic() - started
 
