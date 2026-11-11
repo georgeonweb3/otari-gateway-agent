@@ -1,0 +1,114 @@
+{
+  "question": "What are the current best practices for putting spending limits on autonomous AI agents, and what do at least two production systems (e.g. cloud LLM gateways, agent frameworks) actually enforce today?",
+  "queries": [
+    "autonomous AI agents spending limits best practices 2024",
+    "cloud LLM gateway spending limitations enforcement example",
+    "AI agent framework usage limit enforcement (e.g., LangChain, AgentSmith, Anthropic policy)"
+  ],
+  "sources": [
+    {
+      "title": "AI Agent Spending Limits & Budget Controls | Locus",
+      "url": "https://paywithlocus.com/use-cases/ai-agent-spending-limits",
+      "snippet": "Vendor use-case page on enforcing budget caps and spend controls for AI agents. 2. Controlling AI Agent Infrastructure Costs: Best Practices"
+    },
+    {
+      "title": "Controlling AI Agent Infrastructure Costs: Best Practices",
+      "url": "https://www.lumenova.ai/blog/controlling-ai-infrastructure-costs-best-practices",
+      "snippet": "Governance-oriented best practices for keeping agent infrastructure costs bounded. 3. Prompt-level spend limits for AI agents don't work. Here's the pattern that does"
+    },
+    {
+      "title": "Prompt-level spend limits for AI agents don't work. Here's the pattern that does - Use cases and examples - OpenAI Developer Community",
+      "url": "https://community.openai.com/t/prompt-level-spend-limits-for-ai-agents-dont-work-heres-the-pattern-that-does/1390772",
+      "snippet": "Argues spend limits must be enforced in code/outside the model, not via system prompts or billing alerts. 4. AI Agent Rate Limiting is Broken"
+    },
+    {
+      "title": "AI Agent Rate Limiting is Broken",
+      "url": "https://medium.com/@alessandro.pignati/ai-agent-rate-limiting-is-broken-7eacc83a4129",
+      "snippet": "Discusses rate limiting vs. throttling in agentic contexts and why traditional controls fall short. 5. Reducing Call Center Costs with AI Agents: Practical Cost Levers | NiCE"
+    },
+    {
+      "title": "Reducing Call Center Costs with AI Agents: Practical Cost Levers| NiCE",
+      "url": "https://www.nice.com/agentic-ai/cost-reduction-with-autonomous-ai-agents",
+      "snippet": "Cost-reduction levers for autonomous agents in contact-center deployments"
+    },
+    {
+      "title": "Cost Visibility & Control for LLM Gateway - Aptible",
+      "url": "https://www.aptible.com/docs/llm-gateway/cost-control",
+      "snippet": "\"Set spending limits for your organization and individual keys, and track LLM usage across both\" (org-wide Global Spend Limit $1\u2013$10,000, plus per-key limits). 2. Rate Limits | LLM Gateway Docs"
+    },
+    {
+      "title": "Rate Limits | LLM Gateway Docs",
+      "url": "https://docs.llmgateway.io/resources/rate-limits",
+      "snippet": "Per-organization endpoint, free-model, and provider/model rate-limit layers with a table of default RPM caps. 3. Top 5 Enterprise AI Gateways to Control LLM Spend Across Providers \u2014 Maxim AI"
+    },
+    {
+      "title": "Top 5 Enterprise AI Gateways to Control LLM Spend Across Providers",
+      "url": "https://www.getmaxim.ai/articles/top-5-enterprise-ai-gateways-to-control-llm-spend-across-providers",
+      "snippet": "Compares gateways offering per-consumer budgets, semantic caching, and unified cost visibility across providers. 4. How to Enforce LLM Spend Limits Per Team Without Slowing Down Your Engineers \u2014 DEV Community"
+    },
+    {
+      "title": "How to Enforce LLM Spend Limits Per Team Without Slowing Down Your Engineers - DEV Community",
+      "url": "https://dev.to/deeptishuklatfy/how-to-enforce-llm-spend-limits-per-team-without-slowing-down-your-engineers-ml",
+      "snippet": "Practical walkthrough of per-team budget enforcement and token attribution. 5. Token Spend Limit Enforcement Without Application Code Changes \u2014 Concentrate.ai"
+    },
+    {
+      "title": "Token Spend Limit Enforcement Without Application Code Changes",
+      "url": "https://concentrate.ai/blog/token-spend-limit-enforcement-without-application-code-changes",
+      "snippet": "Argues for enforcing token budgets at the gateway layer rather than in application code"
+    },
+    {
+      "title": "Akto Announces Partnerships with Langchain, Portkey, TrueFoundry, Arcade, and LiteLLM to expand AI Agent Security",
+      "url": "https://finance.yahoo.com/sectors/technology/articles/akto-announces-partnerships-langchain-portkey-130000941.html",
+      "snippet": "PR on AI agent security/guardrail integrations across LLM gateways. 5. When using AI Agents in Azure, I get rate limit exceed despite plenty of TPS/RPM available \u2014 Microsoft Q&A"
+    },
+    {
+      "title": "Rate Limiting & Throttling for AI Agents | NeuralTrust",
+      "url": "https://neuraltrust.ai/blog/rate-limiting-throttling-ai-agents",
+      "snippet": "Vendor blog on capping agent model calls and spend before costs spiral. 4. Akto Announces Partnerships with LangChain, Portkey, TrueFoundry, Arcade, and LiteLLM"
+    },
+    {
+      "title": "When using AI Agents in Azure, I get rate limit exceed despite having plenty of TPS/RPM availabile - Microsoft Q&A",
+      "url": "https://learn.microsoft.com/en-us/answers/questions/2224479/when-using-ai-agents-in-azure-i-get-rate-limit-exc",
+      "snippet": ""
+    },
+    {
+      "title": "How to handle model rate limits - Docs by LangChain",
+      "url": "https://docs.langchain.com/langsmith/handle-model-rate-limiting",
+      "snippet": "LangChain's InMemoryRateLimiter / init_chat_model with client-side rate limiting config (requests_per_second, check_every_n_seconds, max_bucket_size). 2. Building Governed Agents: A Framework for Cost, Control, and Compl"
+    },
+    {
+      "title": "Building Governed Agents: A Framework for Cost, Control, and Compliance",
+      "url": "https://www.langchain.com/blog/building-governed-agents-a-framework-for-cost-control-and-compliance",
+      "snippet": "Argues the gateway is the runtime control plane turning policy into enforceable decisions across model calls, tool calls, and agent hops. 3. Rate Limiting & Throttling for AI Agents \u2014 NeuralTrust"
+    },
+    {
+      "title": "Anthropic Updates Usage Policy, Adding Model Abuse and Deception Rules \u2013 Unite.AI",
+      "url": "https://www.unite.ai/anthropic-updates-usage-policy-adding-model-abuse-and-deception-rules",
+      "snippet": "Coverage of new abuse/deception prohibitions in Anthropic's AUP"
+    },
+    {
+      "title": "Usage Policy update \\ Anthropic",
+      "url": "https://www.anthropic.com/news/usage-policy-update",
+      "snippet": "Notes agentic-use changes, scaled-abuse limits, and enforcement priorities effective Sept 15, 2025. 7. Usage Policy \u2014 Claude (AUP PDF)"
+    },
+    {
+      "title": "Usage Policy - Claude",
+      "url": "https://assets.claude.com/88cf16e8b7d203be16d2c726bcd28a6ec7c7f5c8.pdf",
+      "snippet": "States Anthropic's Safeguards Team may warn, throttle, limit, suspend, or terminate access for suspected violations. 8. 2026 Usage Policy update \u2014 Anthropic"
+    },
+    {
+      "title": "2026 Usage Policy update \\ Anthropic",
+      "url": "https://www.anthropic.com/news/2026-usage-policy-update",
+      "snippet": "Annual policy refresh clarifying rules on agents, misuse detection, and safeguards. 9. Anthropic Updates Usage Policy, Adding Model Abuse and Deception Rules \u2014 Unite.AI"
+    },
+    {
+      "title": "Anthropic sues to block Pentagon blacklisting over AI use restrictions",
+      "url": "https://www.investing.com/news/economy-news/anthropic-sues-to-block-pentagon-blacklisting-over-ai-use-restrictions-4550074",
+      "snippet": ""
+    }
+  ],
+  "searches_executed": 3,
+  "executed_via": [
+    "spare key (no per-key budget attached)"
+  ]
+}
