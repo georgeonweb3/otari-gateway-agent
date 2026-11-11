@@ -18,7 +18,10 @@ payment; the run ends with a hash-chained ledger and a cited answer.
 
 ## How SERV Reasoning powers it
 
-- **Planner + critic on `claude-sonnet-5-serv-kronos`**, screening on
+- **Planner + critic on `claude-sonnet-5`** (the plan's
+  `claude-sonnet-5-serv-kronos` is not in the live catalog — verified
+  2026-11-11; `claude-sonnet-5` is the closest verified substitute),
+  screening on
   `claude-haiku-4.5` — one OpenAI-SDK client pointed at
   `https://inference-api.openserv.ai/v1`.
 - **`serv_prompt_guard` declared on every call** (opt-in injection

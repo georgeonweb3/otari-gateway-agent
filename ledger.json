@@ -1,0 +1,116 @@
+[
+  {
+    "amount_usd": null,
+    "detail": "Run started: cheapest 1GB data bundle under $0.50",
+    "extra": {
+      "extra": {
+        "inference_budget_usd": 0.05,
+        "kite_mode": "simulated"
+      }
+    },
+    "hash": "58a8759268b8769e04c9c12c935f28f5c3dcac4f3db5b6086b80b9266e949335",
+    "kind": "note",
+    "prev_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+    "seq": 1,
+    "ts": 1794430463.544
+  },
+  {
+    "amount_usd": 0.002743,
+    "detail": "planner: claude-sonnet-5",
+    "extra": {
+      "extra": {
+        "request_id": "2de7ad22-1fa9-4253-bc8f-7f1a4a8878a9"
+      }
+    },
+    "hash": "0f32b6fb1885aedc90ed0cd353d1200c0784748ad9487091109eca126dbd1343",
+    "kind": "inference",
+    "prev_hash": "58a8759268b8769e04c9c12c935f28f5c3dcac4f3db5b6086b80b9266e949335",
+    "seq": 2,
+    "ts": 1794430492.488
+  },
+  {
+    "amount_usd": 0.00103475,
+    "detail": "screener: DataHub NG",
+    "extra": {
+      "extra": {
+        "request_id": "0795f4e8-692d-4ac7-bfbe-1a341606db89"
+      }
+    },
+    "hash": "b1911f6e2013fcde58b6503dbc535935c4a51cbdce92bc726304cc973e9ba06b",
+    "kind": "inference",
+    "prev_hash": "0f32b6fb1885aedc90ed0cd353d1200c0784748ad9487091109eca126dbd1343",
+    "seq": 3,
+    "ts": 1794430495.533
+  },
+  {
+    "amount_usd": 0.0,
+    "detail": "screener: SwiftNet Deals",
+    "extra": {
+      "extra": {
+        "request_id": "17091080-a1d3-465b-9fff-9d516aba5747"
+      }
+    },
+    "hash": "66c0b044884e061317aae5c8da0bedab3627e4d75b9061e2b50d4dfda7bd7a4e",
+    "kind": "inference",
+    "prev_hash": "b1911f6e2013fcde58b6503dbc535935c4a51cbdce92bc726304cc973e9ba06b",
+    "seq": 4,
+    "ts": 1794430497.736
+  },
+  {
+    "amount_usd": 0.0008355,
+    "detail": "screener: BudgetAirtime",
+    "extra": {
+      "extra": {
+        "request_id": "3c759b4d-449e-4099-bd37-05f9099add8b"
+      }
+    },
+    "hash": "33be4fa373a73555a5ef489950bc13dee8a6df22b7349daf229743c6747d6298",
+    "kind": "inference",
+    "prev_hash": "66c0b044884e061317aae5c8da0bedab3627e4d75b9061e2b50d4dfda7bd7a4e",
+    "seq": 5,
+    "ts": 1794430500.205
+  },
+  {
+    "amount_usd": 0.0122772,
+    "detail": "researcher: claude-sonnet-5",
+    "extra": {
+      "extra": {
+        "request_id": "0526265f-3de7-487b-8111-b7b3d28aef80"
+      }
+    },
+    "hash": "45ad585e22514dd322cd8b2780d7bb5ad139bd3fec1bc76306e1cfe021bdb1f6",
+    "kind": "inference",
+    "prev_hash": "33be4fa373a73555a5ef489950bc13dee8a6df22b7349daf229743c6747d6298",
+    "seq": 6,
+    "ts": 1794430548.353
+  },
+  {
+    "amount_usd": 0.013293800000000001,
+    "detail": "critic: claude-sonnet-5",
+    "extra": {
+      "extra": {
+        "request_id": "843b699c-b5c7-4e66-b8e6-889be1c4674f"
+      }
+    },
+    "hash": "67eaf1c2666fd5b8de6d00bf1c00484ed778c0a30811d1ea5a74790ad991f907",
+    "kind": "inference",
+    "prev_hash": "45ad585e22514dd322cd8b2780d7bb5ad139bd3fec1bc76306e1cfe021bdb1f6",
+    "seq": 7,
+    "ts": 1794430607.653
+  },
+  {
+    "amount_usd": 0.45,
+    "detail": "SIMULATED payment $0.45 to sim-data-bundle-1gb (DataHub NG 1GB data bundle)",
+    "extra": {
+      "service_id": "sim-data-bundle-1gb",
+      "session_id": null,
+      "simulated": true,
+      "tx_hash": null
+    },
+    "hash": "87b1f97dc87491e44576667acfffc1639f91ead633215178102546a7034fceb4",
+    "kind": "payment",
+    "prev_hash": "67eaf1c2666fd5b8de6d00bf1c00484ed778c0a30811d1ea5a74790ad991f907",
+    "seq": 8,
+    "ts": 1794430607.653
+  }
+]

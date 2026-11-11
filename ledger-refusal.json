@@ -1,0 +1,52 @@
+[
+  {
+    "amount_usd": null,
+    "detail": "Run started: cheapest 1GB data bundle under $0.50",
+    "extra": {
+      "extra": {
+        "inference_budget_usd": 0.005,
+        "kite_mode": "simulated"
+      }
+    },
+    "hash": "b0d29019bc0a492e83e577ae8662c83932c627b4a283c77d35aaf767f7b828ea",
+    "kind": "note",
+    "prev_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+    "seq": 1,
+    "ts": 1794430168.475
+  },
+  {
+    "amount_usd": 0.002665,
+    "detail": "planner: claude-sonnet-5",
+    "extra": {
+      "extra": {
+        "request_id": "d7b080d2-c8ac-4245-b9d8-83e051719a59"
+      }
+    },
+    "hash": "cd8a6866711e363cd30ecff778557db5b58c2cb23be400565aa80fe67b479bbd",
+    "kind": "inference",
+    "prev_hash": "b0d29019bc0a492e83e577ae8662c83932c627b4a283c77d35aaf767f7b828ea",
+    "seq": 2,
+    "ts": 1794430187.757
+  },
+  {
+    "amount_usd": null,
+    "detail": "Inference budget exceeded: this call would take the run past its $0.005 inference budget (spent $0.002665, next call estimated $0.002665)",
+    "extra": {
+      "extra": {
+        "record": {
+          "calls_made": 1,
+          "code": "inference_budget_exceeded",
+          "detail": "Inference budget exceeded: this call would take the run past its $0.005 inference budget (spent $0.002665, next call estimated $0.002665)",
+          "estimated_next_usd": 0.002665,
+          "limit_usd": 0.005,
+          "spent_usd": 0.002665
+        }
+      }
+    },
+    "hash": "e1b87dbd69ae83e5266ff09d933a4114734c65be44c4f932c977dfa46c61d364",
+    "kind": "refusal",
+    "prev_hash": "cd8a6866711e363cd30ecff778557db5b58c2cb23be400565aa80fe67b479bbd",
+    "seq": 3,
+    "ts": 1794430187.758
+  }
+]

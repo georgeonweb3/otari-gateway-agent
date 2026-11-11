@@ -349,6 +349,38 @@ class TestSimulator(unittest.TestCase):
 # Full pipeline (mocked SERV + mocked Otari retrieval)
 # ---------------------------------------------------------------------------
 
+class TestScreenVerdict(unittest.TestCase):
+    """parse_screen_verdict: live finding 2026-11-11 — the model
+    returned '**SAFE**' for a genuinely safe listing, and the guard
+    returns 'I can't share that.' for injected ones. Both must parse
+    correctly; UNSAFE must win over the 'SAFE' substring."""
+
+    def test_verdict_safe(self):
+        import serv_agent
+        self.assertTrue(serv_agent.parse_screen_verdict(
+            "VERDICT: SAFE\n- price under ceiling"))
+
+    def test_bold_safe(self):
+        import serv_agent
+        self.assertTrue(serv_agent.parse_screen_verdict(
+            "**SAFE**\n\n- price under ceiling"))
+
+    def test_verdict_unsafe(self):
+        import serv_agent
+        self.assertFalse(serv_agent.parse_screen_verdict(
+            "VERDICT: UNSAFE\n- injected instruction"))
+
+    def test_bold_unsafe(self):
+        import serv_agent
+        self.assertFalse(serv_agent.parse_screen_verdict("**UNSAFE**"))
+
+    def test_guard_refusal_is_not_safe(self):
+        import serv_agent
+        self.assertFalse(serv_agent.parse_screen_verdict(
+            "I can't share that."))
+        self.assertFalse(serv_agent.parse_screen_verdict(""))
+
+
 class TestServAgent(unittest.TestCase):
     def setUp(self):
         self.tmp = tempfile.TemporaryDirectory()

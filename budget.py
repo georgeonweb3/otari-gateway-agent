@@ -62,7 +62,8 @@ class InferenceBudgetRefused(Exception):
         )
         detail = (
             "Inference budget exceeded: this call would take the run past "
-            f"its ${limit_usd:.2f} inference budget "
+            f"its ${limit_usd:.6f}".rstrip("0").rstrip(".")
+            + " inference budget "
             f"(spent ${spent_usd:.6f}, {estimate_part})"
         )
         self.record = {

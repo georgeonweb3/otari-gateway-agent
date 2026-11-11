@@ -21,13 +21,18 @@ takes ``hint`` / ``max_iterations`` as schema *defaults*.
     defaults max_iterations=3 (1..10). A hint adds task-specific
     validation criteria.
 
-VERIFICATION STATUS (phase 1, offline): these declarations are taken
-from the published docs and have NOT been confirmed against a live
-SERV call yet — George has not entered the API key and the $1.00
-credit must not be touched. The phase-2 smoke test must confirm that
-a declared guard is accepted (and, for the demo, that a guard refusal
-is captured verbatim). Nothing here claims a live result.
-
+VERIFICATION STATUS (phase 2, LIVE 2026-11-11): the function-tool
+declarations ARE accepted by the gateway (smoke test: 200, both
+serv_prompt_guard and serv_shadow_agent declared; x-openserv-request-id
+present on every response). The bare {"type": "serv_prompt_guard"} shape
+is REJECTED (400 invalid_request_error — accepted types are "function"
+and "custom"). SERV requires a system prompt on every call (400 without
+one). SERV does NOT report cost_usd in usage — all spend is priced from
+the verified models catalog via serv_prices.json and labelled estimated.
+serv_prompt_guard fires live: it returned "I can't share that." with 0
+tokens on the injected SwiftNet listing (screener) and on a researcher
+call whose prompt embedded the tainted listing text — the pipeline now
+withholds UNSAFE descriptions from synthesis (see serv_agent.py).
 There is no mocked or fallback output anywhere in this project. A call
 either returns SERV's real response or raises SERV's real error.
 """
@@ -50,19 +55,22 @@ BASE_URL = os.environ.get(
 )
 
 MODELS = {
-    # Planner + critic: Kronos, the model the existing Kite entrant runs
-    # planning on (serv_prompt_guard + serv_shadow_agent declared).
+    # Planner + critic: claude-sonnet-5 — the closest verified model to
+    # the plan's claude-sonnet-5-serv-kronos, which is NOT in the live
+    # catalog (verified 2026-11-11 via GET /models: 38 models, no
+    # kronos). Same family/generation, reasoning enabled. Honest
+    # substitution; the plan's Kronos references are superseded.
     "planner": os.environ.get(
-        "SERV_MODEL_PLANNER", "claude-sonnet-5-serv-kronos"
+        "SERV_MODEL_PLANNER", "claude-sonnet-5"
     ),
     "researcher": os.environ.get(
-        "SERV_MODEL_RESEARCHER", "claude-sonnet-5-serv-kronos"
+        "SERV_MODEL_RESEARCHER", "claude-sonnet-5"
     ),
     # Screening/explanations: cheap Haiku, same split the existing
     # entrant uses.
     "screener": os.environ.get("SERV_MODEL_SCREENER", "claude-haiku-4.5"),
     "critic": os.environ.get(
-        "SERV_MODEL_CRITIC", "claude-sonnet-5-serv-kronos"
+        "SERV_MODEL_CRITIC", "claude-sonnet-5"
     ),
 }
 
@@ -132,10 +140,15 @@ class CallResult:
     usage: dict | None = field(default=None)
     # SERV-reported figures from the raw response, when present:
     # usage.cost_usd and the x-openserv-request-id header (traceable in
-    # console Usage > Activity). cost_usd is UNVERIFIED on SERV until the
-    # phase-2 smoke test — see budget.py.
+    # console Usage > Activity). VERIFIED 2026-11-11: SERV does NOT
+    # report cost_usd (smoke test: usage carries only token counts), so
+    # cost_usd is usually a price-table ESTIMATE — see cost_estimated.
+    # Never presented as gateway-reported when it is estimated.
     cost_usd: float | None = None
     request_id: str | None = None
+    # True when cost_usd came from the loaded price table (catalog
+    # pricing x returned token counts), not from the gateway.
+    cost_estimated: bool = False
 
 
 def require_api_key() -> str:
@@ -286,6 +299,20 @@ def chat(
                 except (TypeError, ValueError):
                     continue
 
+    # VERIFIED 2026-11-11: SERV reports no per-call cost. Fall back to
+    # the loaded price table (catalog pricing x returned tokens) so the
+    # inference budget still enforces; the cost is labelled estimated
+    # everywhere it surfaces. Without a table, cost stays unknown and
+    # the budget cannot project (see budget.py).
+    cost_estimated = False
+    if cost_usd is None and budget is not None and usage is not None:
+        estimated = budget.estimate_for_tokens(
+            MODELS[role], usage["prompt_tokens"], usage["completion_tokens"]
+        )
+        if estimated is not None:
+            cost_usd = estimated
+            cost_estimated = True
+
     if budget is not None:
         budget.record(cost_usd)
 
@@ -300,6 +327,8 @@ def chat(
         )
     if cost_usd is not None:
         meta += f" cost=${cost_usd:.6f}"
+        if cost_estimated:
+            meta += " (est, price table)"
     else:
         meta += " cost=not-reported"
     print(meta, flush=True)
@@ -313,4 +342,5 @@ def chat(
         usage=usage,
         cost_usd=cost_usd,
         request_id=request_id,
+        cost_estimated=cost_estimated,
     )

@@ -74,8 +74,11 @@ RESEARCHER_SYSTEM = (
     "You are the researcher in a spend-guarded shopping pipeline. Answer "
     "using ONLY the sources provided and the screened listings: pick the "
     "cheapest SAFE listing under $0.50 and state its merchant and price. "
-    "Cite the source URL inline after every factual claim, like "
-    "[https://example.com/page]. Never pick an UNSAFE listing. If no "
+    "The screened listings are the authoritative merchant catalog for "
+    "this task: their merchant, price and SAFE/UNSAFE verdict come from "
+    "the screening stage and need no web-source citation. Web sources "
+    "corroborate market context — cite a source URL inline after claims "
+    "that come from the web sources. Never pick an UNSAFE listing. If no "
     "listing is both safe and under $0.50, say so plainly and buy nothing. "
     "Do not invent figures, prices or features."
 )
@@ -83,10 +86,12 @@ RESEARCHER_SYSTEM = (
 CRITIC_SYSTEM = (
     "You are the critic in a spend-guarded shopping pipeline, from a "
     "different model family than the author of the draft. Check: (1) "
-    "every factual claim carries an inline citation to a URL in the "
-    "source list; (2) the chosen listing is SAFE and under $0.50; (3) "
-    "no figure or feature appears that the sources do not support. Reply "
-    "with a first line that is exactly 'VERDICT: PASS' or "
+    "every web-sourced factual claim carries an inline citation to a URL "
+    "in the source list; (2) the chosen listing is SAFE and under $0.50; "
+    "(3) no figure or feature appears that the sources do not support; "
+    "(4) screened-listing facts (merchant, price, SAFE/UNSAFE) are "
+    "authoritative from the screening stage and need no web citation. "
+    "Reply with a first line that is exactly 'VERDICT: PASS' or "
     "'VERDICT: REVISE', followed by short bullet reasons."
 )
 
@@ -100,6 +105,23 @@ REVISION_SYSTEM = (
 
 DEFAULT_TASK = "cheapest 1GB data bundle under $0.50"
 DEFAULT_LISTINGS = "demo_listings.json"
+
+
+def parse_screen_verdict(content: str) -> bool:
+    """True only when the screener's first line is a SAFE verdict.
+
+    Live finding (2026-11-11): the model does not always obey the
+    "first line exactly VERDICT: SAFE" instruction — it returned
+    "**SAFE**" for a genuinely safe listing. Strip markdown and accept
+    either form; check UNSAFE first ("UNSAFE" contains "SAFE"). A
+    guard refusal ("I can't share that.") is not SAFE either.
+    """
+    if not content or not content.strip():
+        return False
+    first = content.strip().splitlines()[0].strip().strip("*# ").upper()
+    if first.startswith("VERDICT: UNSAFE") or first == "UNSAFE":
+        return False
+    return first.startswith("VERDICT: SAFE") or first == "SAFE"
 
 
 def load_listings(path: str) -> list[dict]:
@@ -120,6 +142,18 @@ def run(task: str, *, inference_budget_usd: float, kite_mode: str,
     serv_client = serv.get_client()  # raises MissingApiKey before any work
     otari_client = otari_agent.otari.get_client()
     inference = budget_mod.InferenceBudget(inference_budget_usd)
+    # VERIFIED 2026-11-11: SERV reports no per-call cost, so the budget
+    # enforces on price-table estimates. Table prices come from the live
+    # GET /models catalog (pricing values read as cents per 1M tokens,
+    # i.e. value/100 = $ per 1M: sonnet-5 260/1300, haiku-4.5 125/650).
+    # That unit reading is the only coherent one across the catalog
+    # ($0.13-$13.00 per 1M input) but is NOT console-confirmed yet;
+    # every cost the budget records is labelled estimated.
+    _price_table = os.path.join(
+        os.path.dirname(os.path.abspath(__file__)), "serv_prices.json"
+    )
+    if os.path.exists(_price_table):
+        inference.load_price_table(_price_table)
     ledger = kite_mod.SpendLedger()
     ledger.append("note", f"Run started: {task}", extra={
         "inference_budget_usd": inference_budget_usd,
@@ -184,9 +218,7 @@ def run(task: str, *, inference_budget_usd: float, kite_mode: str,
             ledger.append("inference", f"screener: {listing['merchant']}",
                           amount_usd=verdict.cost_usd,
                           extra={"request_id": verdict.request_id})
-            safe = verdict.content.strip().splitlines()[0].startswith(
-                "VERDICT: SAFE"
-            ) if verdict.content.strip() else False
+            safe = parse_screen_verdict(verdict.content)
             screened.append({**listing, "safe": safe, "screening": verdict.content})
             print(f"--- Screen {listing['merchant']}: "
                   f"{'SAFE' if safe else 'UNSAFE'} ---\n{verdict.content}\n")
@@ -207,9 +239,24 @@ def run(task: str, *, inference_budget_usd: float, kite_mode: str,
         )
 
         block = otari_agent._sources_block(sources)
+        # Live finding (2026-11-11): feeding an UNSAFE listing's raw
+        # description into the researcher trips serv_prompt_guard (the
+        # SwiftNet text carries an injected instruction), so the
+        # researcher call comes back "I can't share that." with 0
+        # tokens. Only SAFE listings contribute their description;
+        # UNSAFE ones contribute merchant + price + verdict only. This
+        # is also the correct security shape: untrusted text never
+        # reaches the synthesis model verbatim.
         listings_block = "\n".join(
-            f"- {s['merchant']}: ${s['price_usd']:.2f} — "
-            f"{'SAFE' if s['safe'] else 'UNSAFE'} — {s['description']}"
+            (
+                f"- {s['merchant']}: ${s['price_usd']:.2f} — SAFE — "
+                f"{s['description']}"
+            )
+            if s["safe"]
+            else (
+                f"- {s['merchant']}: ${s['price_usd']:.2f} — UNSAFE — "
+                "excluded (description withheld: flagged unsafe)"
+            )
             for s in screened
         )
         draft = serv.chat(
