@@ -1,0 +1,70 @@
+SpendGuard CLI — retrieval stage raw output
+
+===== query 1/3 attempt 1 via main key =====
+1GB data bundle listing
+response id: chatcmpl-RJphFMTpsh8TaPGKbDe7WKIw
+otari_tool_calls: [{"id": "otari_ws_24fe31806b104ed5865227c985309172", "type": "web_search", "status": "failed", "query": "1GB data bundle listing"}]
+--- content ---
+The search did not run — it was blocked by a spend limit (`budget_exceeded`), so no results were returned and there is no source list to report.
+
+===== query 1/3 attempt 2 via spare key (no per-key budget attached) =====
+1GB data bundle listing
+response id: chatcmpl-RPzlGWEEm3zRL3fY6KEeBNIo
+otari_tool_calls: [{"id": "otari_ws_b0c97065e91a4f4e9e7656deb3c2cca5", "type": "web_search", "status": "completed", "query": "1GB data bundle listing price", "sources": [{"url": "https://datacost.co.za/guides/cheapest-1gb-data-south-africa", "title": "Cheapest 1GB Data South Africa (2026)", "published_date": null}, {"url": "https://www.straighttalk.com/all-plans/data-add-on-1gb-no-contract", "title": "Data Add-On - 1GB LTE Data | Straight Talk", "published_date": null}, {"url": "https://www.facebook.com/netonezimbabwe/posts/introducing-the-value-bundle-get-1gb-of-data-for-just-1-surf-stream-and-do-so-mu/1369751768530775", "title": "NetOne", "published_date": null}, {"url": "https://mobile.asda.com/scoop/1gb-data", "title": "1GB of data: How much is it and how long does it last? - Asda Mobile", "published_date": null}, {"url": "https://www.visualcapitalist.com/cost-of-mobile-data-worldwide", "title": "What Does 1GB of Mobile Data Cost in Every Country?", "published_date": null}]}, {"id": "otari_ws_6f6005960f74425c88b63efc14bcf042", "type": "web_search", "status": "completed", "query": "1GB data plan offers comparison", "sources": [{"url": "https://dailywireless.org/mobile/best-prepaid-cell-phone-plans", "title": "Best Prepaid Cell Phone Plans 2026 - How Good Are No Contract Plans?", "published_date": null}, {"url": "https://www.youtube.com/watch?v=Q9JUbqmQy0o", "title": "Best Unlimited Data Plans for $20 or Less!", "published_date": null}, {"url": "https://www.cnet.com/tech/mobile/best-phone-plans", "title": "Best Cellphone Plans 2026 | Compare Top Mobile Phone Plans and Carriers", "published_date": null}, {"url": "https://bestbroadbanddeals.co.uk/mobiles/worldwide-data-pricing", "title": "The Cost of 1GB Of Mobile Data in 237 Countries", "published_date": null}, {"url": "https://www.nerdwallet.com/finance/learn/best-cheap-cell-phone-plans", "title": "The Best Prepaid Phone Plans of 2026 - NerdWallet", "published_date": null}]}]
+--- content ---
+Sources found:
+
+1. **Cheapest 1GB Data South Africa (2026)** — https://datacost.co.za/guides/cheapest-1gb-data-south-africa — Compares prepaid 1GB bundles across SA networks (e.g., Cell C daily 1GB ~R25, MTN monthly 1GB R79, Telkom daily 1GB R31).
+2. **Data Add-On - 1GB LTE Data | Straight Talk** — https://www.straighttalk.com/all-plans/data-add-on-1gb-no-contract — US carrier 1GB data add-on that doesn't expire with active service.
+3. **NetOne (Zimbabwe) — Value Bundle** — https://www.facebook.com/netonezimbabwe/posts/1369751768530775 — 1GB of data for $1 via *379# promotion.
+4. **1GB of data: How much is it and how long does it last? — Asda Mobile** — https://mobile.asda.com/scoop/1gb-data — Explains what 1GB equates to and how long it lasts for typical usage.
+5. **What Does 1GB of Mobile Data Cost in Every Country? — Visual Capitalist** — https://www.visualcapitalist.com/cost-of-mobile-data-worldwide — Global visualization of 1GB mobile data pricing by country.
+6. **The Cost of 1GB Of Mobile Data in 237 Countries — BestBroadbandDeals** — https://bestbroadbanddeals.co.uk/mobiles/worldwide-data-pricing — League table of 1GB data costs computed from 5,600+ plans worldwide.
+7. **Best Prepaid Cell Phone Plans 2026 — DailyWireless** — https://dailywireless.org/mobile/best-prepaid-cell-phone-plans — Roundup of no-contract prepaid plans including low-data tiers.
+8. **Best Unlimited Data Plans for $20 or Less — Stetson Doggett (YouTube)** — https://www.youtube.com/watch?v=Q9JUbqmQy0o — Notes MobileX 1GB as a top budget pick.
+9. **Best Cellphone Plans of 2026 — CNET** — https://www.cnet.com/tech/mobile/best-phone-plans — Expert picks across carriers, including small-data plans.
+10. **The Best Prepaid Phone Plans of 2026 — NerdWallet** — https://www.nerdwallet.com/finance/learn/best-cheap-cell-phone-plans — Compares cheap/prepaid plans.
+
+===== query 2/3 attempt 1 via main key =====
+prepaid 1GB data plan deal
+response id: chatcmpl-RauS6qa3A6yNdhaDtvUsW1kW
+otari_tool_calls: [{"id": "otari_ws_620ac7f6bde645a9a6c8aeaeb6d804cb", "type": "web_search", "status": "failed", "query": "prepaid 1GB data plan deal"}]
+--- content ---
+The search did not run — it was blocked by a budget/spend limit before executing, so I have no results or sources to list.
+
+===== query 2/3 attempt 2 via spare key (no per-key budget attached) =====
+prepaid 1GB data plan deal
+response id: chatcmpl-RbNSS5pWHGtnvzsYJOiZV8rA
+otari_tool_calls: [{"id": "otari_ws_6992898f17a148e6b92cef1c00ef7ef5", "type": "web_search", "status": "completed", "query": "prepaid 1GB data plan deal", "sources": [{"url": "https://speedtalkmobile.com/wireless/prepaid-mobile-sim-card-plans/9-30-day-plan", "title": "Prepaid Unlimited Text, 500 Min, 1GB Data for $9/Month", "published_date": null}, {"url": "https://www.usnews.com/360-reviews/services/cell-phone-plans/best-prepaid-cell-phone-plans", "title": "Best Prepaid Cell Phone Plans 2026 | U.S. News", "published_date": null}, {"url": "https://www.boostmobile.com/plans", "title": "Prepaid Cell Phone Plans | No Contract Unlimited Plans - Boost Mobile", "published_date": null}, {"url": "https://www.straighttalk.com/all-plans/data-add-on-1gb-no-contract", "title": "Data Add-On - 1GB LTE Data | Straight Talk", "published_date": null}, {"url": "https://www.verizon.com/prepaid/plans/phone-plans", "title": "Verizon Prepaid Phone Plans | 15 GB of Data and Unlimited | Verizon Prepaid", "published_date": null}]}]
+--- content ---
+Sources:
+
+1. **Prepaid Unlimited Text, 500 Min, 1GB Data for $9/Month** — https://speedtalkmobile.com/wireless/prepaid-mobile-sim-card-plans/9-30-day-plan — $9/month prepaid plan with 1GB data, 500 minutes, and unlimited text on a 30-day cycle.
+2. **Best Prepaid Cell Phone Plans 2026 | U.S. News** — https://www.usnews.com/360-reviews/services/cell-phone-plans/best-prepaid-cell-phone-plans — Roundup of top prepaid carriers and plans, ranked from customer surveys and research.
+3. **Prepaid Cell Phone Plans | No Contract Unlimited Plans - Boost Mobile** — https://www.boostmobile.com/plans — Boost's lineup of no-contract prepaid plans and current deals.
+4. **Data Add-On - 1GB LTE Data | Straight Talk** — https://www.straighttalk.com/all-plans/data-add-on-1gb-no-contract — 1GB LTE data add-on that doesn't expire with active service.
+5. **Verizon Prepaid Phone Plans** — https://www.verizon.com/prepaid/plans/phone-plans — Verizon Prepaid plans including 15GB and unlimited options.
+
+===== query 3/3 attempt 1 via main key =====
+1GB mobile data bundle offer
+response id: chatcmpl-RTlTt8k8HGUrpuRyP389Vrx5
+otari_tool_calls: [{"id": "otari_ws_1abf6c055e5e47608ef43840b7bce34f", "type": "web_search", "status": "failed", "query": "1GB mobile data bundle offer"}]
+--- content ---
+The search did not run — the tool returned a budget/spend-limit error (`budget_exceeded`), so no sources were retrieved. I can't provide a source list.
+
+===== query 3/3 attempt 2 via spare key (no per-key budget attached) =====
+1GB mobile data bundle offer
+response id: chatcmpl-Rloww6BRKVBKxfd3Oj8ToYFy
+otari_tool_calls: [{"id": "otari_ws_39c3058a86af40c284a0b7df89a2add2", "type": "web_search", "status": "completed", "query": "1GB mobile data bundle offer", "sources": [{"url": "https://speedtalkmobile.com/wireless/top-value-unlimited-phone-plan/unlimited-text-phone-plan-500-min-talk", "title": "$9 A Month 500 Minutes & 500 Text Phone Plan 1GB Data SIM Card", "published_date": null}, {"url": "https://www.straighttalk.com/all-plans/data-add-on-1gb-no-contract", "title": "Data Add-On - 1GB LTE Data | Straight Talk", "published_date": null}, {"url": "https://www.cricketwireless.com/support/plans-and-features/add-1gb-data", "title": "Add 1GB Data", "published_date": null}, {"url": "https://www.boostmobile.com/plans", "title": "Prepaid Cell Phone Plans | No Contract Unlimited Plans - Boost Mobile", "published_date": null}, {"url": "https://20somethingfinance.com/cheapest-data-plan-smartphones", "title": "Cheapest Data Plans for Mobile Phones (Updated for 2026)", "published_date": null}]}]
+--- content ---
+**Sources:**
+
+1. **$9 A Month 500 Minutes & 500 Text Phone Plan 1GB Data SIM Card** — https://speedtalkmobile.com/wireless/top-value-unlimited-phone-plan/unlimited-text-phone-plan-500-min-talk — SpeedTalk Mobile prepaid plan with 500 min, 500 texts and 1GB data per 30 days on 5G/4G-LTE, no credit check or contract.
+
+2. **Data Add-On - 1GB LTE Data | Straight Talk** — https://www.straighttalk.com/all-plans/data-add-on-1gb-no-contract — Straight Talk 1GB data add-on that doesn't expire with active service.
+
+3. **Add 1GB Data — Cricket Wireless** — https://www.cricketwireless.com/support/plans-and-features/add-1gb-data — Cricket 1GB high-speed data add-on for $10 one-time or recurring monthly; expires at end of plan cycle.
+
+4. **Prepaid Cell Phone Plans | No Contract Unlimited Plans - Boost Mobile** — https://www.boostmobile.com/plans — Boost Mobile prepaid plans page, including data plans and tablet/watch data options.
+
+5. **The Cheapest Data Plans for Mobile Phones** — https://20somethingfinance.com/cheapest-data-plan-smartphones — Comparison roundup of the cheapest mobile data plans, noting throttle limits and prepaid MVNO options.

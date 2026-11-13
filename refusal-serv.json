@@ -1,0 +1,8 @@
+{
+  "detail": "Inference budget exceeded: this call would take the run past its $0.005 inference budget (spent $0.002665, next call estimated $0.002665)",
+  "code": "inference_budget_exceeded",
+  "limit_usd": 0.005,
+  "spent_usd": 0.002665,
+  "estimated_next_usd": 0.002665,
+  "calls_made": 1
+}

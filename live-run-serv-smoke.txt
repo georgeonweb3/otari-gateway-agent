@@ -1,0 +1,29 @@
+SERV smoke test — 2026-11-11 ~21:30 WAT (live, via custom.openserv helper + repo client)
+Account credit: $1.00 total. All costs below computed from catalog pricing
+(haiku-4.5: $1.25/1M in, $6.50/1M out); gateway reports NO cost_usd.
+
+[1] helper, bare-type tool shape {"type":"serv_prompt_guard"} + haiku, no system prompt:
+    400 invalid_request_error — Tool type "serv_prompt_guard" is not supported
+    for model "claude-haiku-4.5". Accepted types: "function", "custom".
+    request_id 2e5293d3-e3c4-4123-a1ef-20b26d89d77e. Cost $0 (rejected pre-dispatch).
+[2] helper, same call, no tools, no system prompt:
+    400 — "A system prompt is required. Please include a system or developer
+    message in your request." request_id 836cbf3e-3eb3-46b2-a9ea-f6a649895167.
+[3] helper, haiku + system prompt, no tools: 200, content "ok", usage
+    218 in / 4 out / 222 total, request_id a34e7d08-ae67-417f-91b7-4f1ab73b1035,
+    NO cost_usd in usage. Computed cost ~$0.000299.
+[4] repo client, function-tool shape {"type":"function","function":{"name":
+    "serv_prompt_guard"}}: 200, content "ok", same 222 tokens, request_id
+    adc41187-6013-4db5-98c3-08657366a02f, cost not reported. GUARD ACCEPTED.
+[5] repo client, + serv_shadow_agent declared: 200, content "ok", same 222
+    tokens, request_id db5bae86-3003-4775-a6bc-ea2693a6e90e. SHADOW ACCEPTED.
+[6] helper AFTER fix to function-tool shape, both guards: 200, content "Ok",
+    222 tokens, request_id c9e8d355-0b65-4e43-a00d-b9b7ec7ce4c9.
+
+VERDICTS: model claude-haiku-4.5 (cheapest verified Claude) works; guards
+accepted ONLY in function-tool shape; x-openserv-request-id present on every
+response incl. 400s; cost_usd ABSENT — all spend in this phase is priced from
+the verified models catalog (units: cents per 1M tokens) and labelled estimated.
+Planner model: claude-sonnet-5-serv-kronos NOT in catalog (38 models listed);
+substituted claude-sonnet-5 (reasoning, in 260 / out 1300). SERV requires a
+system prompt on every call. Prompt-token floor ~218 even for trivial prompts.

@@ -1,0 +1,24 @@
+Task: cheapest 1GB data bundle under $0.50
+
+[serv] role=planner model=claude-sonnet-5 latency=19.28s request_id=d7b080d2-c8ac-4245-b9d8-83e051719a59 tokens=645 (in 550 / out 95) cost=$0.002665 (est, price table)
+
+--- Plan (claude-sonnet-5) ---
+QUERY: Q1: 1GB data bundle price
+QUERY: Q2: cheap prepaid 1GB data plan deals
+QUERY: Q3: 1GB internet bundle offer
+
+SCREEN: For listings returned by Q1, Q2, and Q3, require exactly 1GB of data.
+SCREEN: For listings returned by Q1, Q2, and Q3, require price below the specified budget threshold.
+
+
+--- refusal, verbatim-style record ---
+{
+  "detail": "Inference budget exceeded: this call would take the run past its $0.005 inference budget (spent $0.002665, next call estimated $0.002665)",
+  "code": "inference_budget_exceeded",
+  "limit_usd": 0.005,
+  "spent_usd": 0.002665,
+  "estimated_next_usd": 0.002665,
+  "calls_made": 1
+}
+--- end of refusal ---
+Ledger (3 entries) in ledger-refusal.json

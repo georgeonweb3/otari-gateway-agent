@@ -1,5 +1,15 @@
 # OpenServ build status — phase 2 LIVE, verified 2026-11-11 ~21:00-22:00 WAT
 
+## Update 2026-11-13 ~21:36 WAT — Kite session APPROVED, payment BLOCKED on $0 balance
+
+- Kite CLI signed in (georgeterlumun3@gmail.com, JWT valid), buyer agent agent_01a1d5ae-5852-7786-935e-bffd8ac2fd75 registered. Runtime key 0x021d5eC333855Bd80291C70254B7964C1cf08520 still UNBOUND ("No agent resolves" — needs DID; does not block the legacy session lane).
+- Session #3 CREATED 21:33 WAT and APPROVED by George via passkey: request agent_session_req_01a1d69d-e88a-7721-9234-cfe7b60c90b1, session agent_session_01a1d69e-dae5-7609-9e83-a8cb24000e0e, $2/tx, $10 total, 1h, task "Buy one StableUpload upload slot for 0.005 USDC via Kite". **Expires ~22:34 WAT.**
+- Execute attempted 21:36 WAT: POST https://stableupload.dev/api/upload {filename openserv-proof.txt, contentType text/plain, tier 10mb}, idempotency-key openserv-demo-20261113-1. FAILED: `insufficient_balance` ("Wallet balance is insufficient for this payment").
+- `kpass wallet balance` verified 21:35 WAT: **total $0.00** (USDC 0 on all chains incl. Base). Kite Base wallet: 0xFeAD1c6B5934DddCe5E38D2F298CDCDaeA03DBF6.
+- UNBLOCK: George funds the Base wallet with a little USDC (slot is $0.005; ~$1 covers it with room), then re-run the same execute inside the live session (before 22:34 WAT) or create a fresh session later. Funding is his action/money. No allowance is set (allowance status: none) — sessions are the payment path.
+- **DECISION 2026-11-13 21:44 WAT (George): ship with the simulated Kite payment.** Live Kite path blocked on Kite-chain funding (Base USDC not spendable by Passport; card min $20 + KYC not sensible for a $0.005 demo). Entry ships with the Kite payment honestly labelled simulated (receipts already carry simulated: true, tx_hash: null) and the live SERV proofs carrying it: inference-budget refusal (verbatim), guard firing live on SwiftNet (0 tokens billed), full run ledger valid. Remaining before Sun 20:00 WAT submit: (3) red-team eval proof (c), (4) critic guard-refusal follow-up, (5) console cost cross-check, (6) package (video + deck + X post + Typeform).
+- StableUpload catalog entry confirmed: id fd42389304a893279783ef57, POST /api/upload, $0.005, x402 base USDC, tiers 10mb/100mb/1gb/short-*.
+
 Updated: 2026-11-11 ~22:00 WAT. Entry: SERV Hackathon Edition 02,
 Kite track — "Two budgets, one agent". Deadline: **Sun Nov 15, 2026,
 23:59 UTC (Mon Nov 16, 00:59 WAT)**. Submission form:
